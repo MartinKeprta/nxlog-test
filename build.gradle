@@ -1,0 +1,54 @@
+
+
+plugins {
+    id 'java'
+    id "io.qameta.allure" version "2.8.1"
+}
+
+allure {
+    autoconfigure = true
+    version = '2.7.0'  // Latest Allure Version
+
+    useJUnit5 {
+        version = '2.7.0' // Latest Allure Version
+    }
+
+}
+
+
+group 'co.nxlog'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+ext {
+    jUnitVersion = '5.7.0-M1'
+}
+
+test {
+    systemProperty "testConfig", System.getProperty("testConfig")
+    useJUnitPlatform()
+}
+
+dependencies {
+    //JUNIT JUPITER
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "$jUnitVersion"
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "$jUnitVersion"
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: "$jUnitVersion"
+    // https://mvnrepository.com/artifact/net.joshka/junit-json-params
+    compile group: 'net.joshka', name: 'junit-json-params', version: '5.6.2-r0'
+
+    //REST
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '4.3.1'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '4.3.1'
+    //JSON
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+
+
+}
