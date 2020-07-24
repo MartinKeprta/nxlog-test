@@ -55,6 +55,25 @@ public class UserTest {
     }
 
     @Test
+    @Feature("As user I want to retrieve list of users with pagination")
+    @Description("Retrieve list of user and validate them with pagination")
+    @DisplayName("Retrieve list of users with pagination")
+    @Epic("User management")
+    @Severity(SeverityLevel.CRITICAL)
+    public void getUserListForPage() {
+        RestAssured.given()
+                .basePath("/users")
+                    .with().queryParam("page", 35)
+                    .get()
+                        .then()
+                        .body("_meta.success.value", is(true))
+                        .body("_meta.code.value",is(200))
+                        .body("_meta.totalCount.value",greaterThan(100))
+                        .body("result",hasItem(allOf(hasKey("id"))))
+                        .body(matchesJsonSchemaInClasspath("UserListSchema.json"));
+            }
+
+    @Test
     @Feature("As user I want to retrieve existing user by ID")
     @Description("Retrieve user and validate response")
     @DisplayName("Retrieve single user")
